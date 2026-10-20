@@ -1,4 +1,4 @@
-# RuangKita — Meeting Room Booking
+# RuangKita — Mini Project Booking Meeting Room
 
 Aplikasi Laravel untuk pencarian ruang, permintaan booking, approval admin, kalender ketersediaan, dan ekspor laporan CSV.
 
