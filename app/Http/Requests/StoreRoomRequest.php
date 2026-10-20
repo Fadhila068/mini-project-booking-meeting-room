@@ -1,0 +1,4 @@
+<?php
+namespace App\Http\Requests;
+use Illuminate\Foundation\Http\FormRequest; use Illuminate\Validation\Rule;
+class StoreRoomRequest extends FormRequest { public function authorize():bool{return $this->user()?->isAdmin() ?? false;} public function rules():array { $id=$this->route('room')?->id; return ['name'=>['required','string','max:100'],'code'=>['required','alpha_dash','max:30',Rule::unique('meeting_rooms','code')->ignore($id)],'location'=>['required','string','max:100'],'capacity'=>['required','integer','min:1','max:1000'],'description'=>['nullable','string'],'opens_at'=>['nullable','date_format:H:i'],'closes_at'=>['nullable','date_format:H:i','after:opens_at'],'is_active'=>['nullable','boolean'],'facilities'=>['array'],'facilities.*'=>['exists:facilities,id'],'image'=>['nullable','image','mimes:jpg,jpeg,png,webp','max:2048']];} }

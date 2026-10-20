@@ -1,0 +1,10 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\{AdminBookingController,AuthController,BookingController,DashboardController,ReportController,RoomController};
+
+Route::redirect('/', '/dashboard');
+Route::middleware('guest')->group(function(){ Route::get('/login',[AuthController::class,'showLogin'])->name('login');Route::post('/login',[AuthController::class,'login'])->middleware('throttle:5,1');Route::get('/register',[AuthController::class,'showRegister'])->name('register');Route::post('/register',[AuthController::class,'register']);});
+Route::post('/logout',[AuthController::class,'logout'])->middleware('auth')->name('logout');
+Route::middleware('auth')->group(function(){Route::get('/dashboard',DashboardController::class)->name('dashboard');Route::get('/rooms',[RoomController::class,'index'])->name('rooms.index');Route::get('/rooms/{room}',[RoomController::class,'show'])->name('rooms.show');Route::get('/bookings',[BookingController::class,'index'])->name('bookings.index');Route::get('/bookings/create',[BookingController::class,'create'])->name('bookings.create');Route::post('/bookings',[BookingController::class,'store'])->name('bookings.store');Route::post('/bookings/{booking}/cancel',[BookingController::class,'cancel'])->name('bookings.cancel');Route::get('/availability',[BookingController::class,'availability'])->name('availability');Route::get('/calendar',[BookingController::class,'availability'])->name('calendar');});
+Route::prefix('admin')->middleware(['auth','admin'])->name('admin.')->group(function(){Route::resource('rooms',RoomController::class)->except(['show','destroy']);Route::get('/bookings',[AdminBookingController::class,'index'])->name('bookings.index');Route::get('/bookings/{booking}/edit',[AdminBookingController::class,'edit'])->name('bookings.edit');Route::put('/bookings/{booking}',[AdminBookingController::class,'update'])->name('bookings.update');Route::get('/reports',[ReportController::class,'index'])->name('reports.index');Route::get('/reports/csv',[ReportController::class,'csv'])->name('reports.csv');});

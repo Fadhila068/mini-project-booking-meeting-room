@@ -1,0 +1,13 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source "../**/*.blade.php";
+@source "../**/*.js";
+@source "../**/*.vue";
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+@layer components { .nav {@apply block rounded-lg px-3 py-2 hover:bg-slate-800 hover:text-white;} .nav-active {@apply bg-slate-800 text-white;} .card {@apply rounded-xl border border-slate-200 bg-white p-5 shadow-sm;} .field {@apply mt-2 block w-full rounded-lg border border-slate-300 bg-white px-3 text-base leading-5 text-slate-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none;} input.field, select.field {@apply h-10;} textarea.field {@apply min-h-24 py-2;} .auth-field-group {@apply mt-5;} .auth-label {@apply block text-sm font-medium text-slate-700;} .password-control {@apply relative;} .password-control .password-input {@apply pr-11;} .password-toggle {@apply absolute right-1 top-1/2 -translate-y-1/2 rounded-md p-2 text-slate-500 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500;} .password-toggle svg {@apply h-5 w-5;} .btn-primary {@apply rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500;} .detail-list {@apply mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm;} .detail-list dt {@apply text-slate-500;} .detail-list dd {@apply break-words font-medium text-slate-800;} .availability-badge {@apply inline-flex rounded-full px-2 py-1 text-xs font-medium;} .availability-available {@apply bg-emerald-100 text-emerald-800;} .availability-booked {@apply bg-red-100 text-red-800;} .availability-pending {@apply bg-amber-100 text-amber-800;} .availability-unavailable {@apply bg-slate-200 text-slate-700;} table {@apply min-w-full text-left text-sm;} th {@apply border-b px-3 py-3 font-medium text-slate-500;} td {@apply border-b px-3 py-3;} .badge {@apply rounded-full px-2 py-1 text-xs font-medium;} .badge-pending {@apply bg-amber-100 text-amber-800;} .badge-approved {@apply bg-emerald-100 text-emerald-800;} .badge-rejected,.badge-cancelled {@apply bg-red-100 text-red-800;} }

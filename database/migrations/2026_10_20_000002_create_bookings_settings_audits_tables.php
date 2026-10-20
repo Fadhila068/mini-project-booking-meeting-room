@@ -1,0 +1,7 @@
+<?php
+use Illuminate\Database\Migrations\Migration; use Illuminate\Database\Schema\Blueprint; use Illuminate\Support\Facades\Schema;
+return new class extends Migration { public function up(): void {
+ Schema::create('bookings', function(Blueprint $t) { $t->id(); $t->string('booking_code')->unique(); $t->foreignId('user_id')->constrained()->restrictOnDelete(); $t->foreignId('meeting_room_id')->constrained()->restrictOnDelete(); $t->string('title'); $t->text('description')->nullable(); $t->dateTime('start_at')->index(); $t->dateTime('end_at')->index(); $t->unsignedInteger('participant_count'); $t->string('status')->default('pending')->index(); $t->text('rejection_reason')->nullable(); $t->foreignId('approved_by')->nullable()->constrained('users')->nullOnDelete(); $t->dateTime('approved_at')->nullable(); $t->dateTime('cancelled_at')->nullable(); $t->timestamps(); $t->index(['meeting_room_id','start_at','end_at']); });
+ Schema::create('booking_status_histories', function(Blueprint $t) { $t->id(); $t->foreignId('booking_id')->constrained()->cascadeOnDelete(); $t->foreignId('actor_id')->nullable()->constrained('users')->nullOnDelete(); $t->string('status'); $t->text('note')->nullable(); $t->timestamps(); });
+ Schema::create('settings', function(Blueprint $t) { $t->id(); $t->string('key')->unique(); $t->string('value'); $t->timestamps(); });
+ } public function down(): void { Schema::dropIfExists('settings'); Schema::dropIfExists('booking_status_histories'); Schema::dropIfExists('bookings'); } };
