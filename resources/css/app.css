@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import '@fontsource-variable/plus-jakarta-sans';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -7,7 +8,216 @@
 @source "../**/*.vue";
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-sans: 'Plus Jakarta Sans Variable', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-brand-50: #e9f6f3;
+    --color-brand-100: #cfece6;
+    --color-brand-200: #a0d6cb;
+    --color-brand-600: #0e6b63;
+    --color-brand-700: #0b5650;
+    --color-brand-800: #0a4440;
+
+    --color-ink-50: #f4f6f6;
+    --color-ink-100: #ecf0f1;
+    --color-ink-200: #dde3e6;
+    --color-ink-300: #c5ced2;
+    --color-ink-400: #8a9aa2;
+    --color-ink-500: #667780;
+    --color-ink-700: #34444d;
+    --color-ink-900: #16222b;
+    --color-ink-950: #101a21;
+
+    --radius-btn: 12px;
+    --radius-card: 16px;
+    --radius-pill: 9999px;
 }
-@layer components { .nav {@apply block rounded-lg px-3 py-2 hover:bg-slate-800 hover:text-white;} .nav-active {@apply bg-slate-800 text-white;} .card {@apply rounded-xl border border-slate-200 bg-white p-5 shadow-sm;} .field {@apply mt-2 block w-full rounded-lg border border-slate-300 bg-white px-3 text-base leading-5 text-slate-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none;} input.field, select.field {@apply h-10;} textarea.field {@apply min-h-24 py-2;} .auth-field-group {@apply mt-5;} .auth-label {@apply block text-sm font-medium text-slate-700;} .password-control {@apply relative;} .password-control .password-input {@apply pr-11;} .password-toggle {@apply absolute right-1 top-1/2 -translate-y-1/2 rounded-md p-2 text-slate-500 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500;} .password-toggle svg {@apply h-5 w-5;} .btn-primary {@apply rounded-lg bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500;} .detail-list {@apply mt-3 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm;} .detail-list dt {@apply text-slate-500;} .detail-list dd {@apply break-words font-medium text-slate-800;} .availability-badge {@apply inline-flex rounded-full px-2 py-1 text-xs font-medium;} .availability-available {@apply bg-emerald-100 text-emerald-800;} .availability-booked {@apply bg-red-100 text-red-800;} .availability-pending {@apply bg-amber-100 text-amber-800;} .availability-unavailable {@apply bg-slate-200 text-slate-700;} table {@apply min-w-full text-left text-sm;} th {@apply border-b px-3 py-3 font-medium text-slate-500;} td {@apply border-b px-3 py-3;} .badge {@apply rounded-full px-2 py-1 text-xs font-medium;} .badge-pending {@apply bg-amber-100 text-amber-800;} .badge-approved {@apply bg-emerald-100 text-emerald-800;} .badge-rejected,.badge-cancelled {@apply bg-red-100 text-red-800;} }
+
+@layer base {
+    body {
+        font-family: var(--font-sans);
+        background-color: var(--color-ink-50);
+        color: var(--color-ink-950);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        ::before,
+        ::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
+}
+
+@layer components {
+    /* Tombol Utama (brand-600, teks putih, radius 12px) */
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2 rounded-[12px] bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white transition-all duration-150 hover:bg-brand-700 active:bg-brand-800 focus:outline-none focus:ring-2 focus:ring-brand-600/30 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 min-h-[44px];
+    }
+
+    /* Tombol Sekunder (putih, border ink-300, teks ink-700) */
+    .btn-secondary {
+        @apply inline-flex items-center justify-center gap-2 rounded-[12px] border border-ink-300 bg-white px-4 py-2.5 text-sm font-medium text-ink-700 transition-all duration-150 hover:bg-ink-100 hover:text-ink-900 active:bg-ink-200 focus:outline-none focus:ring-2 focus:ring-brand-600/30 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 min-h-[44px];
+    }
+
+    /* Tombol Danger / Batal */
+    .btn-danger {
+        @apply inline-flex items-center justify-center gap-2 rounded-[12px] bg-rose-50 border border-rose-200 px-4 py-2.5 text-sm font-medium text-rose-700 transition-all duration-150 hover:bg-rose-100 focus:outline-none focus:ring-2 focus:ring-rose-500/30 min-h-[44px];
+    }
+
+    /* Kartu (putih, border ink-200, radius 16px, tanpa shadow berat) */
+    .card {
+        @apply rounded-[16px] border border-ink-200 bg-white p-5 md:p-6 transition-shadow;
+    }
+
+    /* Input Field */
+    .field {
+        @apply block w-full rounded-[12px] border border-ink-300 bg-white px-3.5 text-base leading-tight text-ink-950 placeholder:text-ink-400 transition-colors focus:border-brand-600 focus:ring-2 focus:ring-brand-600/20 focus:outline-none min-h-[44px];
+    }
+
+    input.field, select.field {
+        @apply h-11;
+    }
+
+    textarea.field {
+        @apply min-h-28 py-3 leading-relaxed;
+    }
+
+    /* Auth & Form Groups */
+    .auth-field-group {
+        @apply mt-4;
+    }
+
+    .auth-label {
+        @apply block text-sm font-medium text-ink-700 mb-1.5;
+    }
+
+    .password-control {
+        @apply relative;
+    }
+
+    .password-control .password-input {
+        @apply pr-12;
+    }
+
+    .password-toggle {
+        @apply absolute right-1 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-[10px] p-2 text-ink-500 hover:text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-600 min-h-[40px] min-w-[40px];
+    }
+
+    .password-toggle svg {
+        @apply h-5 w-5;
+    }
+
+    /* Sidebar Navigation */
+    .nav {
+        @apply flex items-center gap-3 rounded-[12px] px-3.5 py-2.5 text-sm font-medium text-ink-300 hover:bg-ink-900 hover:text-white transition-colors min-h-[44px];
+    }
+
+    .nav-active {
+        @apply bg-brand-600 text-white hover:bg-brand-700 font-semibold shadow-xs;
+    }
+
+    /* Badge Status (Pill penuh) */
+    .badge {
+        @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider;
+    }
+
+    .badge-pending {
+        @apply bg-[#fffbeb] text-[#92400e] border border-[#fbbf24]/40;
+    }
+
+    .badge-approved {
+        @apply bg-[#ecfdf5] text-[#065f46] border border-[#a0d6cb]/60;
+    }
+
+    .badge-rejected {
+        @apply bg-[#fff1f2] text-[#9f1239] border border-[#f43f5e]/30;
+    }
+
+    .badge-cancelled {
+        @apply bg-ink-100 text-ink-500 border border-ink-200;
+    }
+
+    /* Availability Badge */
+    .availability-badge {
+        @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold;
+    }
+
+    .availability-available {
+        @apply bg-brand-50 text-brand-700 border border-brand-200;
+    }
+
+    .availability-booked {
+        @apply bg-rose-50 text-rose-700 border border-rose-200;
+    }
+
+    .availability-pending {
+        @apply bg-[#fffbeb] text-[#92400e] border border-[#fbbf24]/50;
+    }
+
+    .availability-unavailable {
+        @apply bg-ink-100 text-ink-500 border border-ink-200;
+    }
+
+    /* Chip Fasilitas */
+    .facility-chip {
+        @apply inline-flex items-center gap-1.5 rounded-full bg-ink-100 px-3 py-1 text-xs font-medium text-ink-700 border border-ink-200;
+    }
+
+    /* Tab & Filter Pill */
+    .pill-tab {
+        @apply inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium transition-colors min-h-[40px];
+    }
+
+    .pill-tab-active {
+        @apply bg-brand-600 text-white font-semibold shadow-xs;
+    }
+
+    .pill-tab-inactive {
+        @apply bg-white text-ink-700 border border-ink-300 hover:bg-ink-100;
+    }
+
+    /* Timeline Slot */
+    .timeline-slot-empty {
+        @apply bg-brand-50 text-brand-700 border border-brand-200;
+    }
+
+    .timeline-slot-pending {
+        @apply bg-[#fffbeb] text-[#92400e] border border-[#fbbf24] bg-[repeating-linear-gradient(45deg,transparent,transparent_6px,#fbbf2428_6px,#fbbf2428_12px)];
+    }
+
+    .timeline-slot-booked {
+        @apply bg-rose-50 text-rose-700 border border-rose-200;
+    }
+
+    /* Detail List */
+    .detail-list {
+        @apply mt-4 grid grid-cols-[auto_1fr] gap-x-4 gap-y-2.5 text-sm;
+    }
+
+    .detail-list dt {
+        @apply text-ink-500 font-normal;
+    }
+
+    .detail-list dd {
+        @apply break-words font-medium text-ink-950;
+    }
+
+    /* Table Base */
+    table {
+        @apply min-w-full text-left text-sm;
+    }
+
+    th {
+        @apply border-b border-ink-200 bg-ink-50 px-4 py-3 font-semibold text-ink-700 text-xs uppercase tracking-wider;
+    }
+
+    td {
+        @apply border-b border-ink-100 px-4 py-3.5 text-ink-950;
+    }
+}
